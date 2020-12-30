@@ -1,0 +1,113 @@
+from time import sleep
+import RPi.GPIO as GPIO
+import subprocess
+import time
+
+if __name__=='__main__':
+
+    model_path = '/home/pi/Documents/2020vgg16colab_final.h5'
+    print('Loading model:', model_path)
+    model = load_model(model_path)
+
+
+GPIO.setwarnings(False) 
+
+
+t0 = time.time()
+t1 = time.time()
+start = time.time()
+end = time.time()
+Servo = 4
+enIR = 23
+IR1 = 24
+IR2 = 25
+IR3 = 8
+
+DIR1 = 20
+DIR2 = 12
+STEP1 = 21
+STEP2 = 13
+CW1 = 1
+CCW = 0
+SPR = 48
+SPR1 = 96
+PlasticCount=0
+AluminumCount=0
+RejectCount=0
+PC = 0
+AC = 0
+RC = 0
+GPIO.setmode(GPIO.BCM)
+
+#Flaps
+GPIO.setup(DIR1,GPIO.OUT)
+GPIO.setup(STEP1,GPIO.OUT)
+GPIO.setup(DIR2,GPIO.OUT)
+GPIO.setup(STEP2,GPIO.OUT)
+
+if preds[0][0] > preds[0][1] and preds[0][0] > preds[0][2]:
+			AC=AC+1
+			GPIO.output(DIR1,CW1)
+			for x in range(step_count):
+				GPIO.output(STEP1,GPIO.HIGH)
+				sleep(delay)
+				GPIO.output(STEP1,GPIO.LOW)
+				sleep(delay)
+			sleep(0.5)
+
+			GPIO.output(DIR1,CCW)
+			for x in range(step_count):
+				GPIO.output(STEP1,GPIO.HIGH)
+				sleep(delay)
+				GPIO.output(STEP1,GPIO.LOW)
+				sleep(delay)
+				print("Plastic Count: ",PC)
+				print("Aluminum Count: ",AC)
+				print("Reject Count: ",RC)
+			sleep(0.5)
+		                
+		if preds[0][1] > preds[0][0] and preds[0][1] > preds[0][2] :
+			PC=PC+1
+			GPIO.output(DIR1,CCW)
+			for x in range(step_count):
+				GPIO.output(STEP1,GPIO.HIGH)
+				sleep(delay)
+				GPIO.output(STEP1,GPIO.LOW)
+				sleep(delay)
+			sleep(0.5)
+			
+			GPIO.output(DIR1,CW1)
+			for x in range(step_count):
+				GPIO.output(STEP1,GPIO.HIGH)
+				sleep(delay)
+				GPIO.output(STEP1,GPIO.LOW)
+				sleep(delay)
+				print("Plastic Count: ",PC)
+				print("Aluminum Count: ",AC)
+				print("Reject Count: ",RC)
+			sleep(0.5)
+		
+		if preds[0][2] > preds[0][0] and preds[0][2] > preds[0][1]:
+			RC=RC+1
+			GPIO.output(DIR2,CW1)
+			for x in range(step_count1):
+				GPIO.output(STEP2,GPIO.HIGH)
+				sleep(delay)
+				GPIO.output(STEP2,GPIO.LOW)
+				sleep(delay)
+			sleep(0.5)
+
+			GPIO.output(DIR2,CCW)
+			for x in range(step_count1):
+				GPIO.output(STEP2,GPIO.HIGH)
+				sleep(delay)
+				GPIO.output(STEP2,GPIO.LOW)
+				sleep(delay)
+				print("Plastic Count: ",PC)
+				print("Aluminum Count: ",AC)
+				print("Reject Count: ",RC)
+			sleep(0.5)
+		pwm.ChangeDutyCycle(duty1)
+		end = time.time()
+		print('Processed in:', end - start)
+		sleep(1)
